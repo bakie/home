@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "home"
+      MYSQL_USER: "home_user"
+      MYSQL_PASSWORD: "home_password"
+    restart: always
+    image: percona/percona-server:5.7
+    ports:
+      - "3306:3306"
+    container_name: "home_db"
+  app:
+    environment:
+      DATABASE_URL: mysql://home_user:home_password@db/home
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: >
+      bash -c "/usr/bin/wait-for-it db:3306 -- python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    links:
+      - db:db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    container_name: "home_app"
