@@ -14,22 +14,16 @@
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-        <title>What's For Dinner</title>
+        <title>Home app</title>
     </head>
     <body>
         <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
             <div class="container">
-                <a href="#" class="navbar-brand">What's For Dinner</a>
+                <a href="{% url 'base:index' %}" class="navbar-brand">Home</a>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Menus</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Dishes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Ingredients</a>
+                            <a class="nav-link" href="{% url 'meals:index' %}">Meals</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
