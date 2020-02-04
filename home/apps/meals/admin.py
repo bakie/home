@@ -1,6 +1,23 @@
 from django.contrib import admin
-from .models import Recipe, Ingredient, Unit
+from django.db import models
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from .models import Recipe, Ingredient, Unit, RecipeIngredient
 
-admin.site.register(Recipe)
+
+class RecipeIngredientInline(admin.TabularInline):
+    model = RecipeIngredient
+    extra = 0
+
+
+class RecipesAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': FilteredSelectMultiple(Ingredient, False)},
+    }
+    inlines = [
+        RecipeIngredientInline,
+    ]
+
+
+admin.site.register(Recipe, RecipesAdmin)
 admin.site.register(Ingredient)
 admin.site.register(Unit)
