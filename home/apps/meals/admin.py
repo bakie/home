@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.contrib.admin.widgets import FilteredSelectMultiple
-from .models import Recipe, Ingredient, Unit, RecipeIngredient
+from .models import Recipe, Ingredient, Unit, RecipeIngredient, Menu
 
 
 class RecipeIngredientInline(admin.TabularInline):
@@ -21,3 +21,4 @@ class RecipesAdmin(admin.ModelAdmin):
 admin.site.register(Recipe, RecipesAdmin)
 admin.site.register(Ingredient)
 admin.site.register(Unit)
+admin.site.register(Menu)

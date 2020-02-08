@@ -35,3 +35,11 @@ class RecipeIngredient(models.Model):
 
     def __str__(self):
         return "%s %s" % (self.amount, self.ingredient)
+
+
+class Menu(models.Model):
+    week_number = models.IntegerField(blank=False)
+    recipes = models.ManyToManyField(Recipe)
+
+    def __str__(self):
+        return "Menu for week %s" % self.week_number
