@@ -20,6 +20,7 @@ services:
       dockerfile: ./Dockerfile
     command: >
       bash -c "/usr/bin/wait-for-it db:3306 -- python manage.py migrate
+      && pipenv install --system
       && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code

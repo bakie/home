@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import DeleteView, ListView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from . import models
+from . import forms
 
 
 # Create your views here.
@@ -27,6 +28,32 @@ class IngredientList(ListView):
             }
             ingredient_objects.append({'ingredient': ingredient, 'modal': modal})
         context['ingredient_objects'] = ingredient_objects
+        return context
+
+
+class IngredientCreate(CreateView):
+    model = models.Ingredient
+    form_class = forms.IngredientForm
+    template_name = 'snippets/form.html'
+    success_url = '/meals/ingredient'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['create'] = True
+        context['type'] = "Ingredient"
+        return context
+
+
+class IngredientUpdate(UpdateView):
+    model = models.Ingredient
+    form_class = forms.IngredientForm
+    template_name = 'snippets/form.html'
+    success_url = '/meals/ingredient'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['update'] = True
+        context['type'] = "Ingredient"
         return context
 
 
