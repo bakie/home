@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mb-5">
+    <div class="card-header">
+        <h1>Menus</h1>
+        <a href="#" class="btn btn-primary">New</a>
+    </div>
+</div>
+<div class="card">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Week</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for menu_object in menu_objects %}
+        {% with menu=menu_object.menu %}
+        <tr>
+            <th scope="row"><a href="#">{{ menu.week_number }}</a></th>
+            <th scope="row"><a href="#" data-toggle="modal" data-target="#delete-menu-modal-{{ menu.id }}"><i class="fas fa-minus-circle"></i></a></th>
+        </tr>
+        {% include "snippets/delete_modal.html" with modal=menu_object.modal %}
+        {% endwith %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

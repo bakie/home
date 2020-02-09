@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mb-5">
+    <div class="card-header">
+        <h1>recipes</h1>
+        <a href="#" class="btn btn-primary">New</a>
+    </div>
+</div>
+<div class="card">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for recipe_object in recipe_objects %}
+        {% with recipe=recipe_object.recipe %}
+        <tr>
+            <th scope="row"><a href="#">{{ recipe.name }}</a></th>
+            <th scope="row"><a href="#" data-toggle="modal" data-target="#delete-recipe-modal-{{ recipe.id }}"><i class="fas fa-minus-circle"></i></a></th>
+        </tr>
+        {% include "snippets/delete_modal.html" with modal=recipe_object.modal %}
+        {% endwith %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

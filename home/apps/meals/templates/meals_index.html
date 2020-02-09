@@ -1,5 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-    This is the index file of the meals
+<div class="bs-docs-section">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="page-header">
+        <h1 id="containers">Meals</h1>
+      </div>
+      <div class="bs-component">
+        <div class="jumbotron">
+          <h3 class="display-5">Menu for week week_number</h3>
+          <hr class="my-4">
+          <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Detail</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Actions</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="bs-component">
+        <div class="list-group">
+          <a href="{% url 'meals:recipe_list' %}" class="list-group-item list-group-item-action">Recipes</a>
+          <a href="{% url 'meals:menu_list' %}" class="list-group-item list-group-item-action">Menus</a>
+          <a href="{% url 'meals:ingredient_list' %}" class="list-group-item list-group-item-action">Ingredients</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
