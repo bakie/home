@@ -142,7 +142,7 @@ class RecipeCreate(CreateView):
             data['formset'] = forms.RecipeFormSet(self.request.POST)
         else:
             data['formset'] = forms.RecipeFormSet()
-            data['formset_prefix'] = 'ingredientsformset'
+            data['formset_prefix'] = 'recipe_ingredients'
         return data
 
 
