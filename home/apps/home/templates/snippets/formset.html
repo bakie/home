@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div id="banner" class="page-header">
+    {% if create %}<h1>Create {{ type }}</h1>{% endif %}
+    {% if update %}<h1>Update {{ type }}</h1>{% endif %}
+    <div class="col-lg-6">
+        <form  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+                <div class="form-group">
+                    {% for field in form %}
+                    <label>{{ field.label }}</label>
+                    {% if field.errors %}
+                    {{ field|add_class:"form-control is-invalid"}}
+                    <div class="invalid-feedback">{{ field.errors.as_text }}</div>
+                    {% else %}
+                    {{ field|add_class:"form-control"}}
+                    {% endif %}
+                    {% endfor %}
+
+                    {{ formset.management_form }}
+                    {% for form in formset %}
+                    <div class="{{ formset_prefix }}">
+                        {{ form.id }}
+                        {% for field in form %}
+                        <label>{{ field.label }}</label>
+                        {% if field.errors %}
+                        {{ field|add_class:"form-control is-invalid"}}
+                        <div class="invalid-feedback">{{ field.errors.as_text }}</div>
+                        {% else %}
+                        {{ field|add_class:"form-control"}}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    {{ formset.errors }}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('.{{ formset_prefix }}').formset({
+            prefix: '{{ formset_prefix }}',
+            addText: 'Add another ingredient'
+        });
+    })
+</script>
+{% endblock content %}

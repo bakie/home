@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.db import transaction
 from . import models
 from . import forms
 
@@ -115,6 +116,34 @@ class RecipeList(ListView):
             recipe_objects.append({'recipe': recipe, 'modal': modal})
         context['recipe_objects'] = recipe_objects
         return context
+
+
+class RecipeCreate(CreateView):
+    model = models.Recipe
+    form_class = forms.RecipeForm
+    template_name = 'snippets/formset.html'
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+        with transaction.atomic():
+            self.object = form.save()
+            if formset.is_valid():
+                formset.instance = self.object
+                formset.save()
+        return super(RecipeCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return '/meals/recipe'
+
+    def get_context_data(self, **kwargs):
+        data = super(RecipeCreate, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['formset'] = forms.RecipeFormSet(self.request.POST)
+        else:
+            data['formset'] = forms.RecipeFormSet()
+            data['formset_prefix'] = 'ingredientsformset'
+        return data
 
 
 class RecipeDeleteView(DeleteView):

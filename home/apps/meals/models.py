@@ -28,7 +28,7 @@ class Unit(models.Model):
 
 
 class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.DO_NOTHING, related_name="recipe_ingredients")
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="recipe_ingredients")
     ingredient = models.ForeignKey(Ingredient, on_delete=models.DO_NOTHING)
     amount = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     unit = models.ForeignKey(Unit, default=0, on_delete=models.DO_NOTHING)
